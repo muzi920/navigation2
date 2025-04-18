@@ -251,21 +251,6 @@ def generate_launch_description():
         ],
     )
 
-
-    rviz_config_file = LaunchConfiguration('rviz_config_file')
-    declare_rviz_config_file_cmd = DeclareLaunchArgument(
-        'rviz_config_file',
-        default_value=os.path.join(
-            bringup_dir, 'rviz', 'nav2_default_view.rviz'),
-        description='Full path to the RVIZ config file to use')
-    
-    launch_dir = os.path.join(bringup_dir, 'launch')
-    rviz_cmd = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(launch_dir, 'rviz_launch.py')),
-        launch_arguments={'namespace': namespace,
-                          'rviz_config': rviz_config_file}.items())
-
     # Create the launch description and populate
     ld = LaunchDescription()
 
@@ -284,8 +269,5 @@ def generate_launch_description():
     # Add the actions to launch all of the navigation nodes
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
-
-    # ld.add_action(declare_rviz_config_file_cmd)
-    # ld.add_action(rviz_cmd)
 
     return ld

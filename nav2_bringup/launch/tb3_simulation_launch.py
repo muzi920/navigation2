@@ -143,7 +143,10 @@ def generate_launch_description():
         #              https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/91
         # default_value=os.path.join(get_package_share_directory('turtlebot3_gazebo'),
         # worlds/turtlebot3_worlds/waffle.model')
-        default_value=os.path.join(bringup_dir, 'worlds', 'world_only.model'),
+        # default_value=os.path.join(bringup_dir, 'worlds', 'world_only.model'),
+        default_value=os.path.join(get_package_share_directory('turtlebot3_gazebo'),
+        'worlds',
+        'turtlebot3_house.world'),
         description='Full path to world model file to load')
 
     declare_robot_name_cmd = DeclareLaunchArgument(
@@ -174,7 +177,7 @@ def generate_launch_description():
         robot_description = infp.read()
 
     start_robot_state_publisher_cmd = Node(
-        condition=IfCondition(use_robot_state_pub),
+        condition=IfCondition(use_simulator),
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name='robot_state_publisher',
